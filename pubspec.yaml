@@ -1,14 +1,14 @@
 name: brainfuck
-description: A sample command-line application.
-# version: 1.0.0
-# homepage: https://www.example.com
-# author: zonble <email@example.com>
+description: A sample command-line Brainfuck interpreter.
+version: 0.1.0
+homepage: https://www.example.com
+author: zonble <zonble@gmail.com>
 
 environment:
   sdk: '>=2.1.0 <3.0.0'
 
-#dependencies:
-#  path: ^1.4.1
+executables:
+  brainfuck:
 
 dev_dependencies:
   pedantic: ^1.0.0

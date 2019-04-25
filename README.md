@@ -1,4 +1,17 @@
-A sample command-line application.
+# Brainfuck Dart
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+A sample command-line Brainfuck interpreter
+
+## Installation
+
+To install
+
+```sh
+pub global activate -sgit https://github.com/zonble/brainfuck_dart.git
+```
+
+## Usage
+
+```
+brainfuck "YOUR_BRAINFUCK_CODE"
+```

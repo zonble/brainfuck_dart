@@ -1,13 +1,11 @@
-# Brainfuck Dart
-
-A sample command-line Brainfuck interpreter
+A sample command-line Brainfuck interpreter implemented with Dart language.
 
 ## Installation
 
-To install
+You can install the command-line tool via [dart pub](https://pub.dev/). Just run the command blow.
 
 ```sh
-pub global activate -sgit https://github.com/zonble/brainfuck_dart.git
+pub global activate brainfuck
 ```
 
 ## Usage

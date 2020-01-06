@@ -1,14 +1,16 @@
 import 'dart:io';
 
+/// The status of calling [Brainfuck.run].
 enum Status {
   success,
   failed,
 }
 
+/// The Brainfuck operators.
 enum Operator {
   end,
   increasePointer,
-  decreatePointer,
+  decreasePointer,
   increaseValue,
   decreaseValue,
   output,
@@ -17,8 +19,12 @@ enum Operator {
   jumpBack,
 }
 
+/// The Instructions of a Brainfuck program.
 class Instruction {
+  /// The operator.
   final Operator op;
+
+  /// The operand.
   int operand;
 
   Instruction(this.op, {this.operand});
@@ -26,35 +32,41 @@ class Instruction {
 
 const dataSize = 65535;
 
+/// The Brainfuck interpreter.
 class Brainfuck {
+  /// The source code.
   final String source;
+
+  /// The compiled instructions.
   List<Instruction> program;
 
+  /// Creates a new instance.
   Brainfuck(this.source);
 
+  /// Compiles the source code into instructions.
   Status compile() {
-    List<Instruction> program = [];
-    List<int> stack = [];
-    for (int i = 0; i < source.length; i++) {
+    List program = <Instruction>[];
+    List stack = <int>[];
+    for (var i = 0; i < source.length; i++) {
       final c = source[i];
 
       switch (c) {
-        case ">":
+        case '>':
           program.add(Instruction(Operator.increasePointer));
           break;
-        case "<":
-          program.add(Instruction(Operator.decreatePointer));
+        case '<':
+          program.add(Instruction(Operator.decreasePointer));
           break;
-        case "+":
+        case '+':
           program.add(Instruction(Operator.increaseValue));
           break;
-        case "-":
+        case '-':
           program.add(Instruction(Operator.decreaseValue));
           break;
-        case ".":
+        case '.':
           program.add(Instruction(Operator.output));
           break;
-        case ",":
+        case ',':
           program.add(Instruction(Operator.input));
           break;
         case '[':
@@ -78,23 +90,24 @@ class Brainfuck {
     return Status.success;
   }
 
+  /// Run the program.
   Status run() {
-    if (this.program == null) {
+    if (program == null) {
       final result = compile();
       if (result == Status.failed) {
         return Status.failed;
       }
     }
-    List<int> data = List.generate(dataSize, (i) => 0);
-    int ptr = 0;
-    int index = 0;
+    var data = List<int>.generate(dataSize, (i) => 0);
+    var ptr = 0;
+    var index = 0;
     while (program[index].op != Operator.end && ptr < dataSize) {
       final instruction = program[index];
       switch (instruction.op) {
         case Operator.increasePointer:
           ptr++;
           break;
-        case Operator.decreatePointer:
+        case Operator.decreasePointer:
           ptr--;
           break;
         case Operator.increaseValue:

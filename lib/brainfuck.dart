@@ -25,9 +25,9 @@ class Instruction {
   final Operator op;
 
   /// The operand.
-  int operand;
+  int? operand;
 
-  Instruction(this.op, {this.operand});
+  Instruction(this.op, { this.operand});
 }
 
 const dataSize = 65535;
@@ -38,7 +38,7 @@ class Brainfuck {
   final String source;
 
   /// The compiled instructions.
-  List<Instruction> program;
+  List<Instruction>? program;
 
   /// Creates a new instance.
   Brainfuck(this.source);
@@ -86,7 +86,7 @@ class Brainfuck {
       }
     }
     program.add(Instruction(Operator.end));
-    this.program = program;
+    this.program = program as List<Instruction>?;
     return Status.success;
   }
 
@@ -101,8 +101,8 @@ class Brainfuck {
     var data = List<int>.generate(dataSize, (i) => 0);
     var ptr = 0;
     var index = 0;
-    while (program[index].op != Operator.end && ptr < dataSize) {
-      final instruction = program[index];
+    while (program![index].op != Operator.end && ptr < dataSize) {
+      final instruction = program![index];
       switch (instruction.op) {
         case Operator.increasePointer:
           ptr++;
@@ -124,12 +124,12 @@ class Brainfuck {
           break;
         case Operator.jumpForward:
           if (data[ptr] == 0) {
-            index = program[index].operand;
+            index = program![index].operand!;
           }
           break;
         case Operator.jumpBack:
           if (data[ptr] != 0) {
-            index = program[index].operand;
+            index = program![index].operand!;
           }
           break;
         default:

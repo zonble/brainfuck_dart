@@ -27,10 +27,11 @@ class Instruction {
   /// The operand.
   int? operand;
 
-  Instruction(this.op, { this.operand});
+  /// Cretaes a new instance.
+  Instruction(this.op, {this.operand});
 }
 
-const dataSize = 65535;
+const _kDataSize = 65535;
 
 /// The Brainfuck interpreter.
 class Brainfuck {
@@ -38,15 +39,15 @@ class Brainfuck {
   final String source;
 
   /// The compiled instructions.
-  List<Instruction>? program;
+  List<Instruction>? _program;
 
   /// Creates a new instance.
   Brainfuck(this.source);
 
   /// Compiles the source code into instructions.
   Status compile() {
-    List program = <Instruction>[];
-    List stack = <int>[];
+    var program = <Instruction>[];
+    var stack = <int>[];
     for (var i = 0; i < source.length; i++) {
       final c = source[i];
 
@@ -85,24 +86,25 @@ class Brainfuck {
           break;
       }
     }
+
     program.add(Instruction(Operator.end));
-    this.program = program as List<Instruction>?;
+    _program = program;
     return Status.success;
   }
 
   /// Run the program.
   Status run() {
-    if (program == null) {
+    if (_program == null) {
       final result = compile();
       if (result == Status.failed) {
         return Status.failed;
       }
     }
-    var data = List<int>.generate(dataSize, (i) => 0);
+    var data = List<int>.generate(_kDataSize, (i) => 0);
     var ptr = 0;
     var index = 0;
-    while (program![index].op != Operator.end && ptr < dataSize) {
-      final instruction = program![index];
+    while (_program![index].op != Operator.end && ptr < _kDataSize) {
+      final instruction = _program![index];
       switch (instruction.op) {
         case Operator.increasePointer:
           ptr++;
@@ -124,17 +126,16 @@ class Brainfuck {
           break;
         case Operator.jumpForward:
           if (data[ptr] == 0) {
-            index = program![index].operand!;
+            index = _program![index].operand!;
           }
           break;
         case Operator.jumpBack:
           if (data[ptr] != 0) {
-            index = program![index].operand!;
+            index = _program![index].operand!;
           }
           break;
         default:
           return Status.failed;
-          break;
       }
       index++;
     }

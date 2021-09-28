@@ -1,7 +1,6 @@
 import 'package:brainfuck/brainfuck.dart' as brainfuck;
 
 void main(List<String> arguments) {
-  // print(arguments);
   if (arguments.isEmpty) {
     print('Usage: brainfuck \"YOUR_CODE\"');
     return;

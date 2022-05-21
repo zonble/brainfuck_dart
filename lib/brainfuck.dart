@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 /// The status of calling [Brainfuck.run].
 enum Status {
@@ -27,7 +28,7 @@ class Instruction {
   /// The operand.
   int? operand;
 
-  /// Cretaes a new instance.
+  /// Creates a new instance.
   Instruction(this.op, {this.operand});
 }
 
@@ -100,7 +101,9 @@ class Brainfuck {
         return Status.failed;
       }
     }
-    var data = List<int>.generate(_kDataSize, (i) => 0);
+    var data = Uint8List(_kDataSize);
+    data.map((e) => 0);
+    // var data = List<int>.generate(_kDataSize, (i) => 0);
     var ptr = 0;
     var index = 0;
     while (_program![index].op != Operator.end && ptr < _kDataSize) {

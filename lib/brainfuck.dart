@@ -103,7 +103,6 @@ class Brainfuck {
     }
     var data = Uint8List(_kDataSize);
     data.map((e) => 0);
-    // var data = List<int>.generate(_kDataSize, (i) => 0);
     var ptr = 0;
     var index = 0;
     while (_program![index].op != Operator.end && ptr < _kDataSize) {

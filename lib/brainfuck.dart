@@ -117,6 +117,8 @@ class Brainfuck {
           if (data[ptr] != 0) {
             index = _program![index].operand!;
           }
+        case Operator.end:
+          // Unreachable: while loop guards against Operator.end
       }
       index++;
     }

@@ -1,14 +1,14 @@
 name: brainfuck
 description: A sample command-line Brainfuck interpreter.
-version: 0.3.0
+version: 0.4.0
 homepage: https://github.com/zonble/brainfuck_dart
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 executables:
   brainfuck:
 
 dev_dependencies:
-  lints:
-  test: ^1.9.4
+  lints: ^4.0.0
+  test: ^1.25.0

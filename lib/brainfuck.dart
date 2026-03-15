@@ -55,26 +55,19 @@ class Brainfuck {
       switch (c) {
         case '>':
           program.add(Instruction(Operator.increasePointer));
-          break;
         case '<':
           program.add(Instruction(Operator.decreasePointer));
-          break;
         case '+':
           program.add(Instruction(Operator.increaseValue));
-          break;
         case '-':
           program.add(Instruction(Operator.decreaseValue));
-          break;
         case '.':
           program.add(Instruction(Operator.output));
-          break;
         case ',':
           program.add(Instruction(Operator.input));
-          break;
         case '[':
           stack.add(program.length);
           program.add(Instruction(Operator.jumpForward));
-          break;
         case ']':
           if (stack.isEmpty) {
             return Status.failed;
@@ -82,9 +75,6 @@ class Brainfuck {
           final jumpIndex = stack.removeLast();
           program[jumpIndex].operand = program.length;
           program.add(Instruction(Operator.jumpBack, operand: jumpIndex));
-          break;
-        default:
-          break;
       }
     }
 
@@ -102,7 +92,6 @@ class Brainfuck {
       }
     }
     var data = Uint8List(_kDataSize);
-    data.map((e) => 0);
     var ptr = 0;
     var index = 0;
     while (_program![index].op != Operator.end && ptr < _kDataSize) {
@@ -110,34 +99,26 @@ class Brainfuck {
       switch (instruction.op) {
         case Operator.increasePointer:
           ptr++;
-          break;
         case Operator.decreasePointer:
           ptr--;
-          break;
         case Operator.increaseValue:
           data[ptr]++;
-          break;
         case Operator.decreaseValue:
           data[ptr]--;
-          break;
         case Operator.output:
           stdout.writeCharCode(data[ptr]);
-          break;
         case Operator.input:
           data[ptr] = stdin.readByteSync();
-          break;
         case Operator.jumpForward:
           if (data[ptr] == 0) {
             index = _program![index].operand!;
           }
-          break;
         case Operator.jumpBack:
           if (data[ptr] != 0) {
             index = _program![index].operand!;
           }
-          break;
-        default:
-          return Status.failed;
+        case Operator.end:
+          // Unreachable: while loop guards against Operator.end
       }
       index++;
     }

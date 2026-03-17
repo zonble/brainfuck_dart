@@ -96,28 +96,28 @@ class Brainfuck {
     var index = 0;
     while (_program![index].op != Operator.end && ptr < _kDataSize) {
       final instruction = _program![index];
-      switch (instruction.op) {
-        case Operator.increasePointer:
+      switch (instruction) {
+        case Instruction(op: Operator.increasePointer):
           ptr++;
-        case Operator.decreasePointer:
+        case Instruction(op: Operator.decreasePointer):
           ptr--;
-        case Operator.increaseValue:
+        case Instruction(op: Operator.increaseValue):
           data[ptr]++;
-        case Operator.decreaseValue:
+        case Instruction(op: Operator.decreaseValue):
           data[ptr]--;
-        case Operator.output:
+        case Instruction(op: Operator.output):
           stdout.writeCharCode(data[ptr]);
-        case Operator.input:
+        case Instruction(op: Operator.input):
           data[ptr] = stdin.readByteSync();
-        case Operator.jumpForward:
+        case Instruction(op: Operator.jumpForward, :final operand):
           if (data[ptr] == 0) {
-            index = _program![index].operand!;
+            index = operand!;
           }
-        case Operator.jumpBack:
+        case Instruction(op: Operator.jumpBack, :final operand):
           if (data[ptr] != 0) {
-            index = _program![index].operand!;
+            index = operand!;
           }
-        case Operator.end:
+        case Instruction(op: Operator.end):
           // Unreachable: while loop guards against Operator.end
       }
       index++;

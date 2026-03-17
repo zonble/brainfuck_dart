@@ -1,3 +1,8 @@
+## 0.5.0
+
+- Refactors the Brainfuck interpreter to use Dart pattern matching.
+- Updates development dependencies and adds FVM configuration.
+
 ## 0.4.0
 
 - Updates to Dart 3: requires SDK >=3.0.0, removes unnecessary `break` statements,
